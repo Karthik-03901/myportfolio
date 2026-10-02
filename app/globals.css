@@ -1,0 +1,343 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   CSS VARIABLES — Design Tokens
+   ============================================ */
+
+:root {
+  /* Light Mode Colors */
+  --bg: #F4F1EA;
+  --surface: #FFFFFF;
+  --surface-2: #ECE8DF;
+  --line: #D8D3C7;
+  --text: #111111;
+  --muted: #6B665B;
+  --accent: #3A5A00;
+  --accent-2: #D9480F;
+  
+  /* Timing Functions */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.dark {
+  /* Dark Mode Colors (Default) */
+  --bg: #0A0A0B;
+  --surface: #121214;
+  --surface-2: #1A1A1D;
+  --line: #26262B;
+  --text: #EDEBE4;
+  --muted: #8B8B93;
+  --accent: #C6FF3D;
+  --accent-2: #FF6B35;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+body {
+  font-family: var(--font-general-sans), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--text);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ============================================
+   BLUEPRINT GRID BACKGROUND
+   ============================================ */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-clash-display), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.text-display {
+  font-family: var(--font-clash-display), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.text-serif-italic {
+  font-family: var(--font-instrument-serif), serif;
+  font-style: italic;
+}
+
+.text-mono {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ============================================
+   FOCUS STATES
+   ============================================ */
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+button:focus-visible {
+  outline-offset: 2px;
+}
+
+/* ============================================
+   SELECTION
+   ============================================ */
+
+::selection {
+  background-color: var(--accent);
+  color: var(--bg);
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.container-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .container-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+.section-padding {
+  padding-top: clamp(6rem, 14vw, 12rem);
+  padding-bottom: clamp(6rem, 14vw, 12rem);
+}
+
+/* Registration marks for blueprint aesthetic */
+.registration-mark {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+}
+
+.registration-mark::before,
+.registration-mark::after {
+  content: "";
+  position: absolute;
+  background: var(--line);
+}
+
+.registration-mark::before {
+  width: 100%;
+  height: 1px;
+  top: 50%;
+  left: 0;
+}
+
+.registration-mark::after {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  top: 0;
+}
+
+/* Accent glow effect */
+.glow-accent {
+  box-shadow: 0 0 20px rgba(198, 255, 61, 0.3);
+}
+
+.dark .glow-accent {
+  box-shadow: 0 0 20px rgba(198, 255, 61, 0.5);
+}
+
+/* Hairline borders */
+.border-hairline {
+  border: 1px solid var(--line);
+}
+
+/* Hide scrollbar but keep functionality */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Skip to content link for accessibility */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: var(--bg);
+  padding: 1rem 2rem;
+  border-radius: 2px;
+  font-weight: 600;
+  z-index: 9999;
+  transition: top 0.3s var(--ease-out-expo);
+}
+
+.skip-to-content:focus {
+  top: 1rem;
+}
+
+/* ============================================
+   MONO ANNOTATIONS
+   ============================================ */
+
+.annotation {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  user-select: none;
+}
+
+/* ============================================
+   CUSTOM CURSOR (will be hidden on touch devices)
+   ============================================ */
+
+@media (pointer: fine) {
+  body.has-custom-cursor {
+    cursor: none;
+  }
+  
+  body.has-custom-cursor a,
+  body.has-custom-cursor button,
+  body.has-custom-cursor [role="button"] {
+    cursor: none;
+  }
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
+
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--surface) 0%,
+    var(--surface-2) 50%,
+    var(--surface) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ============================================
+   STATUS INDICATOR
+   ============================================ */
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
